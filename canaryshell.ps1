@@ -87,7 +87,39 @@ function Check-NetworkActivity {
 
 _____________________________________________________________________________________________________________________________________________________
 
-# Here is an updated version of the script that includes a function to detect any modifications to the canary file:
+# Here the final version of the script that includes a function to detect any modifications to the canary file:
+
+<#
+.SYNOPSIS
+Creates a canary file and checks for its presence and for any modifications to the file.
+
+.DESCRIPTION
+This script creates a canary file in the temp directory, and then periodically checks for its presence and for any modifications to the file. 
+If the canary file is not present, a message is written to the output indicating that the canary file has not been detected. 
+If the canary file is present, a message is written to the output indicating that the canary file has been detected, 
+and the script also checks for any modifications to the file. If a modification is detected, a message is written to the output indicating this. 
+The script also checks for any network communications that might be attempting to exfiltrate the canary file, and writes a message to the output 
+if such activity is detected.
+
+.PARAMETER Path
+The path to the canary file.
+
+.EXAMPLE
+PS C:\> .\canary.ps1 -Path "$env:temp\canary.txt"
+Canary file detected: C:\Users\User\AppData\Local\Temp\canary.txt
+#>
+
+param(
+  # The path to the canary file
+  [Parameter(Mandatory=$true)]
+  [string]$Path
+)
+
+# Create the canary file
+New-Item -ItemType File -Path $Path -Force
+
+# Get the initial hash of the canary file
+$initial_hash = (Get-FileHash $Path).Hash
 
 # Set the path to the temp directory
 $temp_path = "$env:temp\canary.txt"
