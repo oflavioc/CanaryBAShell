@@ -1,4 +1,4 @@
-
+## Version 1
 # This script creates a file called "canary.txt" in the temp directory, 
 # and then enters an infinite loop that checks for the presence of the file every 60 seconds. 
 # If the file is present, it writes a message to the output indicating that the canary file has been detected. 
